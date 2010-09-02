@@ -46,7 +46,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     // call the function with bad input
     myFunction( 'lorem ipsum' );
 
-    // throws AssertException with message property of 
+    // throws Error with message property of 
     // "myParam must be a number, you passed: lorem ipsum"
     // the execution will be halted, and the developer will immediately see 
     // what he's done wrong
@@ -57,16 +57,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 var FailFast = {
     
-    // /** @class */
-    // AssertException : function( message ){
-    //     this.prototype = new Error();
-    //     this.prototype.toString = function(){
-    //         return 'AssertException: ' + this.message;
-    //     };
-    //     this.name = 'AssertException';
-    //     this.message = message;
-    // },
-
     /**
      * Asserts that the passed expression evaluates to true
      * @param { expression } exp The expression to evaluate
