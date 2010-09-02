@@ -1,4 +1,26 @@
-/*jslint evil: false, strict: false, undef: true, white: false, onevar:false, browser:true, plusplus:false */
+/*
+Copyright (c) 2010 Morgan Roderick http://roderick.dk
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+/*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
 /*global console:true, jstestdriver:true */
 /**
     @description
@@ -55,7 +77,7 @@ var FailFast = {
     assert : function( exp, msg ){
         var message = msg || 'FailFast.assert: The passed expression is not true';        
         if ( exp !== true ){
-            if( console && console.error && typeof jstestdriver === "undefined" ){
+            if ( console && console.error && typeof jstestdriver === "undefined" ){
                 console.error( message );
             }
             throw ( new Error( message ) );            
@@ -129,6 +151,19 @@ var FailFast = {
     },
     
     /**
+     * Asserts that the passed expression is an instance of the passed Class (klass)
+     * Use this method with caution, as it makes testing a lot harder, when you cannot use duck typing
+     * @param { expression } exp The expression to evaluate
+     * @param { String } message The message to provide as part of the thrown AssertException
+     * @throws Error
+     */
+    assertInstanceOf : function ( klass, exp, msg ){
+        var message = msg || 'FailFast.assertInstanceOf: The passed argument is not an instance of the specified class';
+        this.assert( exp !== undefined, message );
+        this.assert( exp instanceof klass, message );
+    },
+
+    /**
      * Asserts that an object has a property
      * This method checks the entire prototype chain
      * @param { Object } object The object to examine
@@ -149,19 +184,6 @@ var FailFast = {
     assertString : function( exp, msg ){
         var message = msg || 'FailFast.assertString: The passed argument is not a String';
         this.assert( exp !== undefined && typeof exp === 'string' || exp instanceof String, message );
-    },
-
-    /**
-     * Asserts that the passed expression is an instance of the passed Class (klass)
-     * Use this method with caution, as it makes testing a lot harder, when you cannot use duck typing
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown AssertException
-     * @throws Error
-     */
-    assertInstanceOf : function ( klass, exp, msg ){
-        var message = msg || 'FailFast.assertInstanceOf: The passed argument is not an instance of the specified class';
-        this.assert( exp !== undefined, message );
-        this.assert( exp instanceof klass, message );
     },
     
     /**
