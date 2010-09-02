@@ -1,6 +1,6 @@
 h1. FailFast helps you detect errors in your code faster
 
-p. You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that he's passing bad input.
+p. You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input is being passed.
 
 <pre>
 <code>

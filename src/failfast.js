@@ -28,7 +28,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         FailFast helps you detect errors in your code faster.
     </p>
     <p>
-        You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that he's passing bad input.
+        You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input is being passed.
     </p>
     <ul>
         <li><a href="http://martinfowler.com/ieeeSoftware/failFast.pdf">FailFast introduction</li>
