@@ -2,6 +2,7 @@ h1. FailFast helps you detect errors in your code faster
 
 p. You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that he's passing bad input.
 
+<pre>
 <code>
 // define a function, using FailFast to protect itself from bad input
 function myFunction( myParam ){
@@ -17,6 +18,7 @@ myFunction( 'lorem ipsum' );
 // the execution will be halted, and the developer will immediately see
 // what he's done wrong
 </code>
+</pre>
 
 h2. More reading about failing fast
 
