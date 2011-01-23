@@ -2,14 +2,14 @@ TestCase( "FailFast", {
 
     "test assert function" : function() {
         assertNoException( 'should not throw Error for true', function(){
-            FailFast.assert( true, 'my message' );
+            FailFast.assert( 'my message', true );
         });
 
         var invalidExpressions = [ false, null, undefined, 1, "true", "", {}, new Date(), [] ];
         for( var i = 0, j = invalidExpressions.length; i < j; i++ ){
             var exp = invalidExpressions[i];
             assertException( 'should throw Error for non-true values', function(){
-                FailFast.assert( exp, 'some message' );
+                FailFast.assert( 'some message', exp );
             });
         }
         
@@ -18,11 +18,11 @@ TestCase( "FailFast", {
     
     "test assertBoolean function" : function(){
         assertNoException( 'should not throw Error for true', function(){
-            FailFast.assertBoolean( true, 'not a boolean value' );
+            FailFast.assertBoolean( 'not a boolean value', true  );
         });
         
         assertNoException( 'should not throw Error for false', function(){
-            FailFast.assertBoolean( false, 'not a boolean value' );            
+            FailFast.assertBoolean( 'not a boolean value', false );            
         });
         
         var badBooleans = [ 'true', 'false', '', {}, undefined, 0, null ];
@@ -38,13 +38,13 @@ TestCase( "FailFast", {
         for ( var i = 0, j = validExpressions.length; i < j; i++ ){
             var exp = validExpressions[i];
             assertNoException( 'should not throw Error for non-null values', function(){
-                FailFast.assertNotNull( exp, 'some message' );
+                FailFast.assertNotNull( 'some message', exp );
             });
         }
 
         // test that exceptions ARE trown for invalid values
         assertException( 'should throw Error for null value', function(){
-            FailFast.assertNotNull( null, 'some message' );
+            FailFast.assertNotNull( 'some message', null );
         });
 
         expectAsserts( validExpressions.length + 1 );
@@ -53,18 +53,18 @@ TestCase( "FailFast", {
     "test assertNumber function" : function(){
         
         assertNoException( 'should not throw Error for Number literals', function(){
-            FailFast.assertNumber( 1, 'some message' );
+            FailFast.assertNumber( 'some message', 1 );
         });
             
         var number = new Number( 1233 );
         assertNoException( 'should not throw Error for Number instances', function(){
-            FailFast.assertNumber( number, 'some message' ); 
+            FailFast.assertNumber( 'some message', number ); 
         });
 
         var invalid_expressions = [ "", [], {}, false, true, new Date() ];
         for ( var i = 0, j = invalid_expressions.length; i < j; i++ ){
             assertException( 'should throw Error for non-Number values', function(){
-                FailFast.assertNumber( exp, 'some message' );
+                FailFast.assertNumber( 'some message', exp );
             });
         }
     },
@@ -76,7 +76,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = validNumbers.length; i < j; i++ ){
             number = validNumbers[i];
             assertNoException( 'should not throw Error for regular Number values', function(){
-                FailFast.assertNormalNumber( number, 'some message' );
+                FailFast.assertNormalNumber( 'some message', number );
             });
         }
         
@@ -84,7 +84,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = invalidNumbers.length; i < j; i++ ){
             number = invalidNumbers[i];
             assertException( 'should throw Error for special Number values', function(){
-                FailFast.assertNormalNumber( number, 'some message' );
+                FailFast.assertNormalNumber( 'some message', number );
             });
         }
     },
@@ -92,11 +92,11 @@ TestCase( "FailFast", {
     "test assertObject function" : function() {
         var exp, i, j;
 
-        var validExpressions = [ {}, new Object, [], new Array(), new Number(), new Date(), new String( 'some string' ) ];
+        var validExpressions = [ {}, new Object ];
         for ( i = 0; i < validExpressions.length; i++ ) {
             exp = validExpressions[i];
             assertNoException( 'should not throw Error for Object input', function(){
-                FailFast.assertObject( exp, 'some message' ); 
+                FailFast.assertObject( 'some message', exp ); 
             });
         }
 
@@ -104,7 +104,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = invalidExpressions.length; i < j; i++ ){
             exp = invalidExpressions[i];
             assertException( 'should throw Error for non-Object input', function(){
-                FailFast.assertObject( exp, 'some message' );
+                FailFast.assertObject( 'some message', exp );
             });
         }
     },
@@ -144,7 +144,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = pairs.length; i < j; i++ ){
             var pair = pairs[i];
             assertNoException( 'should not throw Error for instances matching supplied Class', function(){
-                FailFast.assertInstanceOf( pair.type, pair.instance, 'some message' );
+                FailFast.assertInstanceOf( 'some message', pair.type, pair.instance );
             });
         }
         
@@ -173,7 +173,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = invalidPairs.length; i < j; i++ ){
             var invalidPair = invalidPairs[i];
             assertException( 'should throw Error for instances not matching supplied Class', function(){
-                FailFast.assertInstanceOf( invalidPair.type, invalidPair.instance, 'some message' ); 
+                FailFast.assertInstanceOf( 'some message', invalidPair.type, invalidPair.instance ); 
             });
         }        
     },    
@@ -183,14 +183,14 @@ TestCase( "FailFast", {
             var myObject = {
                 myKey : 'myValue'
             };
-            FailFast.assertHasProperty( myObject, 'myKey' );
+            FailFast.assertHasProperty( 'expected object to have property', myObject, 'myKey' );
         });
         
         assertException( 'should throw Error for Object missing specified property', function(){
             var myObject = {
                 myKey : 'myValue'
             };
-            FailFast.assertHasProperty( myObject, 'unknowKey' );
+            FailFast.assertHasProperty( 'expected object to have property', myObject, 'unknowKey' );
         });
     },
     
@@ -202,7 +202,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = literals.length; i < j; i++ ){
             value = literals[i];
             assertNoException( 'should not raise any error for string literals', function(){
-                FailFast.assertString( value, 'some message' );
+                FailFast.assertString( 'some message', value );
             });
         }
 
@@ -210,7 +210,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = instances.length; i < j; i++ ){            
             value = instances[i];
             assertNoException( 'should not raise any error for string instances', function(){
-                FailFast.assertString( value, 'some message' );
+                FailFast.assertString( 'some message', value );
             });
         }
 
@@ -218,7 +218,7 @@ TestCase( "FailFast", {
         for ( i = 0, j = nonStrings.length; i < j; i++ ){
             value = nonStrings[i];
             assertException( 'should throw Error for non-string input', function(){
-                FailFast.assertString( value, 'some message' );
+                FailFast.assertString( 'some message', value  );
             });
         }        
     },
@@ -226,8 +226,8 @@ TestCase( "FailFast", {
     "test assertArray function" : function(){
 
         assertNoException('should not throw Error for Array input', function(){
-            FailFast.assertArray( [], 'some message' );
-            FailFast.assertArray( new Array(), 'some message' );
+            FailFast.assertArray( 'some message', []  );
+            FailFast.assertArray( 'some message', new Array() );
         });
         
         // should raise errors for non-array input
@@ -245,24 +245,39 @@ TestCase( "FailFast", {
         for ( var i = 0, j = invalidArrays.length; i < j; i++ ){
             var invalidArray = invalidArrays[i];
             assertException( 'should throw Error for non-Array input', function(){
-                FailFast.assertArray( invalidArray, 'some message' );
+                FailFast.assertArray( 'some message', invalidArray );
             });
         }
     },
     
     "test assertFunction funciton" : function(){
         assertNoException( 'should not throw Error for Function input', function(){
-            FailFast.assertFunction( function(){} );
+            FailFast.assertFunction( 'some message', function(){} );
         });
         
         var badFunctions = [ new Date, [], {}, 123, 'function', null, undefined, NaN ];
         for ( var i = 0, j = badFunctions.length; i < j; i++ ){
             assertException( 'should throw Error for non-Function input', function(){
                 var badFunc = badFunctions[i];
-                FailFast.assertFunction( badFunc );
+                FailFast.assertFunction( 'some message', badFunc );
             });
         }
         
         expectAsserts( badFunctions.length + 1 );        
+    },
+    
+    "test assertDate function" : function(){
+        assertNoException( 'should not throw Error for Date input', function(){
+            FailFast.assertDate( 'some message', new Date() );
+        })
+
+        var badDates = [ [], {}, 123, new Function(), null, undefined, NaN ];
+        for ( var i = 0, j = badDates.length; i < j; i++ ){
+            assertException( 'should throw Error for non-Date input', function(){
+                var badDate = badDates[i];
+                FailFast.assertDate( 'some message', badDate );
+            });
+        }
+
     }
 });
