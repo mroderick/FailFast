@@ -1,4 +1,4 @@
-/*
+/*!
 Copyright (c) 2010 Morgan Roderick http://roderick.dk
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -22,33 +22,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 /*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
 /**
- * section: FailFast
- * [[FailFast]] helps you detect errors in your code faster.
- * You can use [[FailFast]] to safeguard functions from bad input, and giving the caller an early warning that bad input
- * is being passed.
+ *  @description   
+ *  FailFast helps you detect errors in your code faster.
+ *  You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input
+ *  is being passed.
  *
- *     // define a function, using FailFast to protect itself from bad input
- *     function myFunction( myParam ){
- *             FailFast.assertNumber( 'myParam must be a number, you passed: ' + myParam, myParam );
- *             // your real code here
- *     }
+ *  @namespace Holds assertion functions
  *
- *     // call the function with bad input
- *     myFunction( 'lorem ipsum' );
- *
- *     // throws Error with message property of 
- *     // "myParam must be a number, you passed: lorem ipsum"
- *     // the execution will be halted, and the developer will immediately see 
- *     // what he's done wrong
+ *  @example
+ *  // define a function, using FailFast to protect itself from bad input
+ *  function myFunction( myParam ){
+ *      FailFast.assertNumber( 'myParam must be a number, you passed: ' + myParam, myParam );
+ *      // your real code here
+ *  }
  * 
- * <ul>
- *     <li><a href="http://martinfowler.com/ieeeSoftware/failFast.pdf">FailFast introduction</li>
- *     <li><a href="http://en.wikipedia.org/wiki/Fail-fast">FailFast on Wikipedia</a></li>
- *     <li><a href="http://www.c2.com/cgi/wiki?FailFast">C2 Wiki about FailFast</a></li>
- * </ul>
-**/
+ *  // call the function with bad input
+ *  myFunction( 'lorem ipsum' );
+ * 
+ *  // throws Error with message property of 
+ *  // "myParam must be a number, you passed: lorem ipsum"
+ *  // the execution will be halted, and the developer will immediately see 
+ *  // what he's done wrong
+ * 
+ *  @see http://martinfowler.com/ieeeSoftware/failFast.pdf
+ *  @see http://en.wikipedia.org/wiki/Fail-fast
+ *  @see http://www.c2.com/cgi/wiki?FailFast
+ */
 var FailFast = (function(undef){    
     
+    /**
+     *  Throws Errors
+     *  @private
+     */
     function fail( msg ){
         var error = new Error( msg );
         error.name = 'FailFast.AssertError';
@@ -61,31 +66,32 @@ var FailFast = (function(undef){
         VERSION : '0.0',
         
         /**
-         *  FailFast.assert( value [, msg]  ) -> undefined
-         *  - msg (String): A message to pass as part of the Error generated  
-         *  - value: An expression to be examined
-         *  Asserts that the passed value evaluates to true
-        **/ 
+         *  Asserts that the passed value is true
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { Boolean } value The value to examine
+         *  @returns { Boolean }
+         *  @throws Error
+         */
         assert : function( msg, value ){
             return value === true || fail( msg );
         },
 
         /**
-         *  FailFast.assertNotNull( value [, msg] ) -> undefined
-         *  - value: An expression to be examined
-         *  - msg (String): A message to pass as part of the Error generated  
-         *  Asserts that the passed expression is not null
-        **/
-        assertNotNull : function(  msg, value ){
+         *  Asserts that the passed value is not null
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param {} value The value to examine
+         *  @throws Error
+         */
+        assertNotNull : function( msg, value ){
             return value !== null || fail( msg );
         },
         
         /**
-         *  FailFast.assertBoolean( value [, msg] ) -> undefined
-         *  - msg (String): A message to pass as part of the Error generated  
-         *  - value: An expression to be examined
-         *  Asserts that the passed expression is a Boolean, no truthy or falsy values here
-        **/     
+         *  Asserts that the passed value is a Boolean
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { Boolean } value The value to examine
+         *  @throws Error
+         */
         assertBoolean : function( msg, value ){
             return value !== undef && Object.prototype.toString.call(value) === '[object Boolean]' || fail( msg );
         },
@@ -125,32 +131,32 @@ var FailFast = (function(undef){
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Date } value The value to examine
          *  @throws Error
-        **/
+         */
         assertDate : function( msg, value ){
             return value !== undef && Object.prototype.toString.call(value) === '[object Date]' || fail( msg );
         },        
 
         /**
-         *  FailFast.assertNumber( value [, msg ] ) -> undefined
-         *  - msg (String): A message to pass as part of the Error generated  
-         *  - value: An expression to be examined
-         *  Asserts that the passed expression is a number, accepts both number literals and instances of Number
-        **/    
+         *  Asserts that the passed value is a Number
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { Number } value The value to examine
+         *  @throws Error
+         */
         assertNumber : function( msg, value ){
             return Object.prototype.toString.call(value) === '[object Number]' || fail( msg );
         },
 
         /**
-         *  FailFast.assertNormalNumber( value [, msg ] ) -> undefined
-         *  - value: An expression to be examined
-         *  - msg (String): A message to pass as part of the Error generated  
          *  Asserts that the passed expression is a number and asserts that the passed expression is not: 
          *      NaN,
          *      Number.MAX_NUMBER,
          *      Number.MIN_NUMBER,
          *      Number.NEGATIVE_INFINITY,
          *      Number.POSITIVE_INFINITY
-        **/
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { Number } value The value to examine
+         *  @throws Error
+         */
         assertNormalNumber : function( msg, value ){
             return (
                 Object.prototype.toString.call(value) === '[object Number]' && 
@@ -164,26 +170,14 @@ var FailFast = (function(undef){
         },
 
         /**
-         *  FailFast.assertObject( value [, msg ] ) -> undefined
-         *  - value: An expression to be examined
-         *  - msg (String): A message to pass as part of the Error generated  
          *  Asserts that the passed expression is an Object, i.e. has Object in it's prototype chain
          *  This will fail for Arrays, Dates, Strings, Numbers and Booleans
-        **/
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { Object } value The value to examine
+         *  @throws Error
+         */
         assertObject : function( msg, value ){
             return value !== undef && Object.prototype.toString.call(value) === '[object Object]' || fail( msg );
-        },
-
-        /**
-         *  FailFast.assertInstanceOf( klass, value [, msg ] ) -> undefined
-         *  - msg: (String): A message to pass as part of the Error generated  
-         *  - klass: (Object): The object 
-         *  - value: An expression to be examined
-         *  Asserts that the passed expression is an instance of the passed Class (klass)
-         *  Use this method with caution, as it makes testing a lot harder, when you cannot use duck typing
-        **/
-        assertInstanceOf : function( msg, klass, value ){
-            return value !== undef && value instanceof klass || fail( msg );
         },
 
         /**

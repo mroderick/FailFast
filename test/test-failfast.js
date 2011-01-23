@@ -109,74 +109,7 @@ TestCase( "FailFast", {
         }
     },
     
-    "test assertInstanceOf function" : function(){
-        var i, j;
-        
-        var DummyClass = function(){};
-        var pairs = [
-            {
-                type : String,
-                instance : new String( 'some string')
-            }, {
-                type : Number,
-                instance : new Number( 1234 )
-            }, {
-                type : Object,
-                instance : {}
-            }, {
-                type : Object,
-                instance : new Object()
-            }, {
-                type : Date,
-                instance : new Date()
-            }, {
-                type : Array,
-                instance : new Array()
-            }, {
-                type : Array,
-                instance : []
-            }, {
-                type : DummyClass,
-                instance : new DummyClass()
-            }
-        ];
-        
-        for ( i = 0, j = pairs.length; i < j; i++ ){
-            var pair = pairs[i];
-            assertNoException( 'should not throw Error for instances matching supplied Class', function(){
-                FailFast.assertInstanceOf( 'some message', pair.type, pair.instance );
-            });
-        }
-        
-        var invalidPairs = [
-            { 
-                type : Number,
-                instance : '123' 
-            }, {
-                type : String,
-                instance : 123
-            }, {
-                type : String,
-                instance : null
-            }, {
-                type : String,
-                instance : true
-            }, {
-                type : Array,
-                instance : {}
-            }, {
-                type : DummyClass,
-                instance : new Object()
-            }
-        ];
-        
-        for ( i = 0, j = invalidPairs.length; i < j; i++ ){
-            var invalidPair = invalidPairs[i];
-            assertException( 'should throw Error for instances not matching supplied Class', function(){
-                FailFast.assertInstanceOf( 'some message', invalidPair.type, invalidPair.instance ); 
-            });
-        }        
-    },    
+
     
     "test assertHasProperty function" : function(){        
         assertNoException( 'should not throw Error for Object with specified property', function(){
