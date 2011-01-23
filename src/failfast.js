@@ -87,7 +87,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed expression is a Boolean, no truthy or falsy values here
         **/     
         assertBoolean : function( msg, value ){
-            return typeof value === 'boolean' || fail( msg );
+            return value !== undef && Object.prototype.toString.call(value) === '[object Boolean]' || fail( msg );
         },
 
         /**
