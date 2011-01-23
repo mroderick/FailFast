@@ -23,50 +23,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
 /*global console:true, jstestdriver:true */
 /**
-    @description
-    <p>
-        FailFast helps you detect errors in your code faster.
-    </p>
-    <p>
-        You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input is being passed.
-    </p>
-    <ul>
-        <li><a href="http://martinfowler.com/ieeeSoftware/failFast.pdf">FailFast introduction</li>
-        <li><a href="http://en.wikipedia.org/wiki/Fail-fast">FailFast on Wikipedia</a></li>
-        <li><a href="http://www.c2.com/cgi/wiki?FailFast">C2 Wiki about FailFast</a></li>
-    </ul>
-
-    @example
-    // define a function, using FailFast to protect itself from bad input
-    function myFunction( myParam ){
-            FailFast.assertNumber( myParam, 'myParam must be a number, you passed: ' + myParam );
-            // your real code here
-    }
-
-    // call the function with bad input
-    myFunction( 'lorem ipsum' );
-
-    // throws Error with message property of 
-    // "myParam must be a number, you passed: lorem ipsum"
-    // the execution will be halted, and the developer will immediately see 
-    // what he's done wrong
-    
-    @version 0.1
-    @author <a href="mailto:morgan@roderick.dk">Morgan Roderick</a>
-    @namespace Holds functions for failing fast :-)
- */
+ * section: FailFast
+ * [[FailFast]] helps you detect errors in your code faster.
+ * You can use [[FailFast]] to safeguard functions from bad input, and giving the caller an early warning that bad input is being passed.
+ *
+ *     // define a function, using FailFast to protect itself from bad input
+ *     function myFunction( myParam ){
+ *             FailFast.assertNumber( myParam, 'myParam must be a number, you passed: ' + myParam );
+ *             // your real code here
+ *     }
+ *
+ *     // call the function with bad input
+ *     myFunction( 'lorem ipsum' );
+ *
+ *     // throws Error with message property of 
+ *     // "myParam must be a number, you passed: lorem ipsum"
+ *     // the execution will be halted, and the developer will immediately see 
+ *     // what he's done wrong
+ * 
+ * <ul>
+ *     <li><a href="http://martinfowler.com/ieeeSoftware/failFast.pdf">FailFast introduction</li>
+ *     <li><a href="http://en.wikipedia.org/wiki/Fail-fast">FailFast on Wikipedia</a></li>
+ *     <li><a href="http://www.c2.com/cgi/wiki?FailFast">C2 Wiki about FailFast</a></li>
+ * </ul>
+**/
 var FailFast = {
     
     /**
-     * Asserts that the passed expression evaluates to true
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown AssertException
-     * @throws Error
-     * 
-     */
-    assert : function( exp, msg ){
+     *  FailFast.assert( value [, msg]  ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     *  Asserts that the passed value evaluates to true
+    **/ 
+    assert : function( value, msg ){
         var message = msg || 'FailFast.assert: The passed expression is not true';        
-        if ( exp !== true ){
+        if ( value !== true ){
             if ( console && console.error && typeof jstestdriver === "undefined" ){
                 console.error( message );
             }
@@ -75,77 +66,79 @@ var FailFast = {
     },
 
     /**
+     *  FailFast.assertBoolean( value [, msg] ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
      *  Asserts that the passed expression is a Boolean, no truthy or falsy values here
-     *  @param { expression } exp The expression to evaluate
-     *  @param { String } message The message to provide as part of the thrown AssertException
-     */     
-    assertBoolean : function( exp, msg ){
+    **/     
+    assertBoolean : function( value, msg ){
         var message = msg || 'FailFast.assertNumber: The passed argument is not a Boolean';
-        this.assert( typeof exp === 'boolean', message );
+        this.assert( typeof value === 'boolean', message );
     },
 
     /**
-     * Asserts that the passed expression is not null
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown AssertException
-     * @throws Error
-     */
-    assertNotNull : function( exp, msg ){
+     *  FailFast.assertNotNull( value [, msg] ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     *  Asserts that the passed expression is not null
+    **/
+    assertNotNull : function( value, msg ){
         var message = msg || 'FailFast.assertNumber: The passed argument is null';
-        this.assert( exp !== null, message );
+        this.assert( value !== null, message );
     },
 
     /**
-     * Asserts that the passed expression is a number, accepts both number literals and instances of Number
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown Error
-     * @throws Error
-     */
-    assertNumber : function ( exp, msg ){
+     *  FailFast.assertNumber( value [, msg ] ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     *  Asserts that the passed expression is a number, accepts both number literals and instances of Number
+    **/    
+    assertNumber : function ( value, msg ){
         var message = msg || 'FailFast.assertNumber: The passed argument is not a Number';
-        this.assert( !isNaN(parseInt(exp, 10)), message);
+        // FIXME [Morgan Roderick]: using parseInt and not parseFloat could give unexpected results?
+        this.assert( !isNaN(parseInt(value, 10)), message);
     },
 
     /**
-     * Asserts that the passed expression is a number
-     * Asserts that the passed expression is not: 
+     *  FailFast.assertNormalNumber( value [, msg ] ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     * Asserts that the passed expression is a number and asserts that the passed expression is not: 
      *      NaN,
      *      Number.MAX_NUMBER,
      *      Number.MIN_NUMBER,
      *      Number.NEGATIVE_INFINITY,
      *      Number.POSITIVE_INFINITY
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown Error
-     * @throws Error
-     */
-    assertNormalNumber : function( exp, msg ){
+    **/
+    assertNormalNumber : function( value, msg ){
         var message = msg || 'FailFast.assertNormalNumber: The passed argument is not a "normal" Number';
-        this.assertNumber( exp, message );
-        this.assert( !isNaN( exp ), message );
-        this.assert( exp !== Number.MIN_VALUE, message );
-        this.assert( exp !== Number.MAX_VALUE, message );
-        this.assert( exp !== Number.NEGATIVE_INFINITY, message );
-        this.assert( exp !== Number.POSITIVE_INFINITY, message );
+        this.assertNumber( value, message );
+        this.assert( !isNaN( value ), message );
+        this.assert( value !== Number.MIN_VALUE, message );
+        this.assert( value !== Number.MAX_VALUE, message );
+        this.assert( value !== Number.NEGATIVE_INFINITY, message );
+        this.assert( value !== Number.POSITIVE_INFINITY, message );
     },
     
     /**
-     * Asserts that the passed expression is an object, null is NOT accepted
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown AssertException
-     * @throws Error
-     */
-    assertObject : function( exp, msg ){
+     *  FailFast.assertObject( value [, msg ] ) -> undefined
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     *  Asserts that the passed expression is an object, null is NOT accepted
+    **/
+    assertObject : function( value, msg ){
         var message = msg || 'FailFast.assertObject: The passed argument is not an Object';
-        this.assertNotNull( exp, message );
-        this.assert( typeof exp === 'object', message );  
+        this.assertNotNull( value, message );
+        this.assert( typeof value === 'object', message );  
     },
     
     /**
-     * Asserts that the passed expression is an instance of the passed Class (klass)
-     * Use this method with caution, as it makes testing a lot harder, when you cannot use duck typing
-     * @param { expression } exp The expression to evaluate
-     * @param { String } message The message to provide as part of the thrown AssertException
-     * @throws Error
+     *  FailFast.assertInstanceOf( klass, value [, msg ] ) -> undefined
+     *  - klass (Object): The object 
+     *  - value: An expression to be examined
+     *  - msg (String): A message to pass as part of the Error generated  
+     *  Asserts that the passed expression is an instance of the passed Class (klass)
+     *  Use this method with caution, as it makes testing a lot harder, when you cannot use duck typing
      */
     assertInstanceOf : function ( klass, exp, msg ){
         var message = msg || 'FailFast.assertInstanceOf: The passed argument is not an instance of the specified class';
