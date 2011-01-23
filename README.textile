@@ -6,7 +6,7 @@ p. You can use FailFast to safeguard functions from bad input, and giving the ca
 <code>
 // define a function, using FailFast to protect itself from bad input
 function myFunction( myParam ){
-        FailFast.assertNumber( myParam, 'myParam must be a number, you passed: ' + myParam );
+        FailFast.assertNumber( 'myParam must be a number, you passed: ' + myParam, myParam );
         // your real code here
 }
 
