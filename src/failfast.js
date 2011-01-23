@@ -22,9 +22,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 /*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
 /**
+ *  @version 1.0
+ *  @author Morgan Roderick
  *  @description   
  *  FailFast helps you detect errors in your code faster.
- *  You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input
+ *  You can use FailFast to safeguard functions from bad input, and give the caller an early warning that bad input
  *  is being passed.
  *
  *  @namespace Holds assertion functions
@@ -44,9 +46,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  // the execution will be halted, and the developer will immediately see 
  *  // what he's done wrong
  * 
- *  @see http://martinfowler.com/ieeeSoftware/failFast.pdf
- *  @see http://en.wikipedia.org/wiki/Fail-fast
- *  @see http://www.c2.com/cgi/wiki?FailFast
+ *  @see <a href="http://martinfowler.com/ieeeSoftware/failFast.pdf">http://martinfowler.com/ieeeSoftware/failFast.pdf</a>
+ *  @see <a href="http://en.wikipedia.org/wiki/Fail-fast">http://en.wikipedia.org/wiki/Fail-fast</a>
+ *  @see <a href="http://www.c2.com/cgi/wiki?FailFast">http://www.c2.com/cgi/wiki?FailFast</a>
  */
 var FailFast = (function(undef){    
     
@@ -61,9 +63,10 @@ var FailFast = (function(undef){
         throw error;
     }
     
-    return {
+    return (
+        /** @lends FailFast */ {
         
-        VERSION : '0.0',
+        VERSION : '1.0',
         
         /**
          *  Asserts that the passed value is true
@@ -80,6 +83,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed value is not null
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param {} value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertNotNull : function( msg, value ){
@@ -90,6 +94,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed value is a Boolean
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Boolean } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertBoolean : function( msg, value ){
@@ -100,6 +105,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed expression is a string, accepts both string literals and instances of String
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { String } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertString : function( msg, value ){
@@ -110,6 +116,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed expression is an Array
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Array } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertArray : function( msg, value ){
@@ -120,6 +127,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed expression is a Function
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Function } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertFunction : function( msg, value ){        
@@ -130,6 +138,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed value is a Date
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Date } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertDate : function( msg, value ){
@@ -140,6 +149,7 @@ var FailFast = (function(undef){
          *  Asserts that the passed value is a Number
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Number } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertNumber : function( msg, value ){
@@ -155,6 +165,7 @@ var FailFast = (function(undef){
          *      Number.POSITIVE_INFINITY
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Number } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertNormalNumber : function( msg, value ){
@@ -174,6 +185,7 @@ var FailFast = (function(undef){
          *  This will fail for Arrays, Dates, Strings, Numbers and Booleans
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Object } value The value to examine
+         *  @returns { Boolean }
          *  @throws Error
          */
         assertObject : function( msg, value ){
@@ -186,9 +198,11 @@ var FailFast = (function(undef){
          *  @param { String } msg The message to provide as part of the thrown Error
          *  @param { Object } object The object to examine
          *  @param { String } propertyName The property to check for
+         *  @returns { Boolean }
+         *  @throws Error
          */
         assertHasProperty : function( msg, object, propertyName ){
             return propertyName in object || fail( msg );
         }
-    };    
+    });    
 }()); 
