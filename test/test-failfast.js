@@ -80,7 +80,7 @@ TestCase( "FailFast", {
             });
         }
         
-        var invalidNumbers = [ NaN, Number.MAX_VALUE, Number.MIN_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY ];
+        var invalidNumbers = [ NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY ];
         for ( i = 0, j = invalidNumbers.length; i < j; i++ ){
             number = invalidNumbers[i];
             assertException( 'should throw Error for special Number values', function(){
