@@ -212,5 +212,23 @@ TestCase( "FailFast", {
             });
         }
 
-    }
+    },
+
+	"test assertMatch function" : function(){
+		
+		var VALID_REGEX = /^[a-z0-9]{32}$/
+		var VALID_VALUE = '62bb7f0eef3e47fc63968142bea82002';
+		var INVALID_VALUES = ['', '****************', -1, new Date, [], {} ];
+		
+		assertNoException( 'should not throw error for valid regex and value', function(){
+			FailFast.assertMatch( 'some message', VALID_REGEX, VALID_VALUE );
+		});
+		
+		for ( var i = 0, j = INVALID_VALUES.length; i < j; i++ ){
+			assertException( 'should throw Error for non-matching values', function(){
+				var badValue = INVALID_VALUES[i];
+				FailFast.assertMatch( 'some message', VALID_REGEX, badValue );
+			});
+		}
+	}
 });

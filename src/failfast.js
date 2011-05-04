@@ -203,6 +203,18 @@ var FailFast = (function(undef){
          */
         assertHasProperty : function( msg, object, propertyName ){
             return propertyName in object || fail( msg );
-        }
+        },
+
+		/**
+		 *	Asserts that the value passed matches the regular expression
+         *  @param { String } msg The message to provide as part of the thrown Error
+         *  @param { RegExp } regex The regular expression to use
+         *  @param { String } value The value to examine
+		 *	@returns { Boolean }
+		 *  @throws { Error }
+		 */
+		assertMatch : function( msg, regex, value ){
+			return regex.test( value ) || fail( msg );
+		}
     });    
 }()); 
