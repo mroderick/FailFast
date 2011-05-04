@@ -170,12 +170,8 @@ var FailFast = (function(undef){
          */
         assertNormalNumber : function( msg, value ){
             return (
-                Object.prototype.toString.call(value) === '[object Number]' && 
-                !isNaN( value ) &&
-                value !== Number.MIN_VALUE &&
-                value !== Number.MAX_VALUE &&
-                value !== Number.NEGATIVE_INFINITY &&
-                value !== Number.POSITIVE_INFINITY ||
+                +value === value &&
+                isFinite(value) ||
                 fail( msg )
             );
         },
