@@ -40,3 +40,28 @@ myFunction( 'lorem ipsum' );
 * [FailFast introduction](http://martinfowler.com/ieeeSoftware/failFast.pdf)
 * [FailFast on Wikipedia](http://en.wikipedia.org/wiki/Fail-fast)
 * [C2 Wiki about FailFast](http://www.c2.com/cgi/wiki?FailFast)
+
+## Testing
+The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
+
+## Future of FailFast
+
+* Build script to create the following wrappers
+	* jQuery plugin
+	* Ender.js wrapper
+* More extensive examples of good use
+
+## Versioning
+
+FailFast uses [Semantic Versioning](http://semver.org/) for predictable versioning.
+
+## Changelog
+
+* v2.0
+	* Got rid of the mandatory msg argument, as it lead to a lot of repetition for very little value
+	* Grouping all functions under the assert function, should be familiar for users of Buster.JS
+	* Exposing the fail function, to make it easy for users to create custom assertions
+	
+## License
+
+MIT: http://mrgnrdrck.mit-license.org
