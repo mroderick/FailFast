@@ -12,7 +12,7 @@
 
 		"test assert function" : function() {
 			try {
-				FailFast.assert( 'my message', true );
+				FailFast.assert( true );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for true');
 			}
@@ -22,16 +22,16 @@
 			for( i = 0, j = invalidExpressions.length; i < j; i++ ){
 				exp = invalidExpressions[i];
 				assert.exception( function(){
-					FailFast.assert( 'some message', exp );
+					FailFast.assert( exp );
 				});
 			}
 		},
 
-		"test assertBoolean function" : function(){
+		"test assert.boolean function" : function(){
 			
 			try {
-				FailFast.assertBoolean( 'not a boolean value', true	 );
-				FailFast.assertBoolean( 'not a boolean value', false );
+				FailFast.assert.isBoolean( true	 );
+				FailFast.assert.isBoolean( false );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for boolean values');
 			}
@@ -40,18 +40,18 @@
 				i, j;
 			for ( i = 0, j = badBooleans.length; i < j; i++ ){
 				assert.exception( function(){
-					FailFast.assertBoolean( badBooleans[i] );
+					FailFast.assert.isBoolean( badBooleans[i] );
 				});
 			}
 		},
 
-		"test assertNotNull function" : function(){		   // test that no exception is thrown for valid values
+		"test assert.isNotNull function" : function(){		   // test that no exception is thrown for valid values
 			var validExpressions = [ 1, Number( 123 ), true, false, undefined, {}, [], new Date() ],
 				i, j, exp;
 			for ( i = 0, j = validExpressions.length; i < j; i++ ){
 				exp = validExpressions[i];
 				try {
-					FailFast.assertNotNull( 'some message', exp );
+					FailFast.assert.isNotNull( exp );
 				} catch(ex){
 					buster.assertions.fail();
 				}
@@ -59,7 +59,7 @@
 
 			// test that exceptions ARE trown for invalid values
 			assert.exception(function(){
-				FailFast.assertNotNull( 'some message', null );
+				FailFast.assert.isNotNull( null );
 			});
 		},
 
@@ -70,20 +70,20 @@
 				i, j;
 				
 			try {
-				FailFast.assertNumber( 'some message', 1 );
-				FailFast.assertNumber( 'some message', number ); 
+				FailFast.assert.isNumber( 1 );
+				FailFast.assert.isNumber( number ); 
 			} catch(ex){
 				buster.assertions.fail();
 			}
 
 			for ( i = 0, j = invalid_expressions.length; i < j; i++ ){
 				assert.exception( function(){
-					FailFast.assertNumber( 'some message', invalid_expressions[i] );
+					FailFast.assert.isNumber( invalid_expressions[i] );
 				});
 			}
 		},
 
-		"test assertNormalNumber function" : function(){
+		"test assert.isNormalNumber function" : function(){
 			var number, i, j,
 				validNumbers = [ 1, -1000, 1.223245, 1000000000, 0, -2414.2324 ],
 				invalidNumbers = [ NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY ];
@@ -91,7 +91,7 @@
 			for ( i = 0, j = validNumbers.length; i < j; i++ ){
 				number = validNumbers[i];
 				try {
-					FailFast.assertNormalNumber( 'some message', number );
+					FailFast.assert.isNormalNumber( number );
 				} catch(ex){
 					buster.assertions.fail('should not throw Error for regular Number values');
 				}
@@ -100,12 +100,12 @@
 			for ( i = 0, j = invalidNumbers.length; i < j; i++ ){
 				number = invalidNumbers[i];
 				assert.exception( function(){
-					FailFast.assertNormalNumber( 'some message', number );
+					FailFast.assert.isNormalNumber( number );
 				});
 			}
 		},
 
-		"test assertObject function" : function() {
+		"test assert.isObject function" : function() {
 			var exp, i, j,
 				validExpressions = [ {} ],
 				invalidExpressions = [ 1, true, "some string literal", false, undefined, null ];
@@ -113,7 +113,7 @@
 				exp = validExpressions[i];
 				
 				try {
-					FailFast.assertObject( 'some message', exp );
+					FailFast.assert.isObject( exp );
 				} catch(ex){
 					buster.assertions.fail('should not throw Error for Object input');
 				}
@@ -122,12 +122,12 @@
 			for ( i = 0, j = invalidExpressions.length; i < j; i++ ){
 				exp = invalidExpressions[i];
 				assert.exception( function(){
-					FailFast.assertObject( 'some message', exp );
+					FailFast.assert.isObject( exp );
 				});
 			}
 		},
 
-		"test assertHasProperty function" : function(){		   
+		"test assert.hasProperty function" : function(){		   
 			var myObject = {
 					myKey : 'myValue'
 				},
@@ -135,17 +135,17 @@
 				UNKNOWN_KEY = 'unknownKey';
 			
 			try {
-				FailFast.assertHasProperty( 'expected object to have property', myObject, KNOWN_KEY );
+				FailFast.assert.hasProperty( myObject, KNOWN_KEY );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for Object with specified property');
 			}
 
 			assert.exception( function(){
-				FailFast.assertHasProperty( 'expected object to have property', myObject, UNKNOWN_KEY );
+				FailFast.assert.hasProperty( myObject, UNKNOWN_KEY );
 			});
 		},
 
-		"test assertString function" : function(){
+		"test assert.isString function" : function(){
 			var value, i, j,
 				literals	= ['', 'some string', "some double quoted string" ],
 				instances	= [ String(), String( 'some string' ), String( "some double quoted string" ) ],
@@ -154,7 +154,7 @@
 			for ( i = 0, j = literals.length; i < j; i++ ){
 				value = literals[i];
 				try {
-					FailFast.assertString( 'some message', value );
+					FailFast.assert.isString( value );
 				} catch(ex){
 					buster.assertions.fail();
 				}
@@ -163,7 +163,7 @@
 			for ( i = 0, j = instances.length; i < j; i++ ){			
 				value = instances[i];
 				try {
-					FailFast.assertString( 'some message', value );
+					FailFast.assert.isString( value );
 				} catch(ex){
 					buster.assertions.fail();
 				}
@@ -172,14 +172,14 @@
 			for ( i = 0, j = nonStrings.length; i < j; i++ ){
 				value = nonStrings[i];
 				assert.exception( function(){
-					FailFast.assertString( 'some message', value  );
+					FailFast.assert.isString( value  );
 				});
 			}		 
 		},
 
-		"test assertArray function" : function(){
+		"test assert.isArray function" : function(){
 			try {
-				FailFast.assertArray( 'some message', []  );
+				FailFast.assert.isArray( []  );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for Array input');
 			}
@@ -200,14 +200,14 @@
 			for ( i = 0, j = invalidArrays.length; i < j; i++ ){
 				invalidArray = invalidArrays[i];
 				assert.exception( function(){
-					FailFast.assertArray( 'some message', invalidArray );
+					FailFast.assert.isArray( invalidArray );
 				});
 			}
 		},
 
-		"test assertFunction funciton" : function(){
+		"test assert.isFunction funciton" : function(){
 			try {
-				FailFast.assertFunction( 'some message', function(){} );
+				FailFast.assert.isFunction( function(){} );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for Function input');
 			}
@@ -217,16 +217,16 @@
 			for ( i = 0, j = badFunctions.length; i < j; i++ ){
 				assert.exception( function(){
 					badFunc = badFunctions[i];
-					FailFast.assertFunction( 'some message', badFunc );
+					FailFast.assert.isFunction( badFunc );
 				});
 			}
 
 			// expectAsserts( badFunctions.length + 1 );		
 		},
 
-		"test assertDate function" : function(){
+		"test assert.isDate function" : function(){
 			try {
-				FailFast.assertDate( 'some message', new Date() );
+				FailFast.assert.isDate( new Date() );
 			} catch(ex){
 				buster.assertions.fail('should not throw Error for Date input');
 			}
@@ -236,27 +236,27 @@
 			for ( i = 0, j = badDates.length; i < j; i++ ){
 				assert.exception( function(){
 					badDate = badDates[i];
-					FailFast.assertDate( 'some message', badDate );
+					FailFast.assert.isDate( badDate );
 				});
 			}
 		},
 
-		"test assertMatch function" : function(){
+		"test assert.match function" : function(){
 			var VALID_REGEX = /^[a-z0-9]{32}$/,
 				VALID_VALUE = '62bb7f0eef3e47fc63968142bea82002',
 				INVALID_VALUES = ['', '****************', -1, new Date(), [], {} ],
 				i, j, badValue;
 
 			try {
-				FailFast.assertMatch( 'some message', VALID_REGEX, VALID_VALUE );
+				FailFast.assert.match( VALID_REGEX, VALID_VALUE );
 			} catch (ex){
-				buster.asssertions.fail('should not throw error for valid regex and value');
+				buster.assertions.fail('should not throw error for valid regex and value');
 			}
 
 			for ( i = 0, j = INVALID_VALUES.length; i < j; i++ ){
 				assert.exception( function(){
 					badValue = INVALID_VALUES[i];
-					FailFast.assertMatch( 'some message', VALID_REGEX, badValue );
+					FailFast.assert.match( VALID_REGEX, badValue );
 				});
 			}
 		}
