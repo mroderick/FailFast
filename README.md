@@ -1,4 +1,4 @@
-# FailFast helps you detect errors in your code faster
+# FailFast [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 You can use FailFast to safeguard functions from bad input, and giving the caller an early warning that bad input is being passed.
 
